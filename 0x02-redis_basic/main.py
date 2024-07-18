@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
-""" Main file """
+"""
+Main file to demonstrate storing and retrieving data in Redis using the Cache class.
+"""
 
-Cache = __import__('exercise').Cache
+from exercise import Cache, replay
 
 cache = Cache()
 
-s1 = cache.store("first")
+s1 = cache.store("foo")
 print(s1)
-s2 = cache.store("secont")
+s2 = cache.store("bar")
 print(s2)
-s3 = cache.store("third")
+s3 = cache.store(42)
 print(s3)
 
-inputs = cache._redis.lrange("{}:inputs".format(cache.store.__qualname__), 0, -1)
-outputs = cache._redis.lrange("{}:outputs".format(cache.store.__qualname__), 0, -1)
-
-print("inputs: {}".format(inputs))
-print("outputs: {}".format(outputs))
+replay(cache.store)
